@@ -154,7 +154,18 @@ export default function HeaderMenu() {
                 Giới thiệu
               </Link>
 
-              <LogoutButton />
+              {user ? (
+                <LogoutButton />
+              ) : (
+                <Link
+                  href="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-2 w-full px-4 py-2.5 text-sm font-medium text-stone-700 hover:text-emerald-700 hover:bg-emerald-50 transition-colors"
+                >
+                  <UserCircle className="size-4" />
+                  Đăng nhập
+                </Link>
+              )}
             </div>
           </motion.div>
         )}

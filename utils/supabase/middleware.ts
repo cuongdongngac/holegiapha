@@ -72,12 +72,8 @@ export async function updateSession(request: NextRequest) {
     }
   }
 
-  if (isProtectedPath && !user) {
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
-  }
+  // We removed the strict redirect for !user because we want anonymous users to view the dashboard (like the family tree).
+  // The layout and individual pages will handle authorization for admin/editor actions.
 
   // Redirect users who are already logged in away from the login page
   if (isLoginPage && user) {
