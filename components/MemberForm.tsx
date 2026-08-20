@@ -19,6 +19,7 @@ import { Lunar, Solar } from "lunar-javascript";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { updateDescendantGenerationsAction } from "@/app/actions/member";
+import DeleteMemberButton from "@/components/DeleteMemberButton";
 
 
 interface MemberFormProps {
@@ -1031,23 +1032,30 @@ export default function MemberForm({
         initial="hidden"
         animate="show"
         transition={{ delay: 0.2 }}
-        className="flex justify-end gap-3 sm:gap-4 pt-6"
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6"
       >
-        <button
-          type="button"
-          onClick={() => (onCancel ? onCancel() : router.back())}
-          className="btn"
-        >
-          Hủy bỏ
-        </button>
-        <button type="submit" disabled={loading} className="btn-primary">
-          {loading && <Loader2 className="size-4 animate-spin" />}
-          {loading
-            ? "Đang lưu..."
-            : isEditing
-              ? "Lưu thay đổi"
-              : "Thêm thành viên"}
-        </button>
+        <div className="w-full sm:w-auto order-2 sm:order-1">
+          {isEditing && initialData?.id && (
+            <DeleteMemberButton memberId={initialData.id} />
+          )}
+        </div>
+        <div className="flex gap-3 sm:gap-4 w-full sm:w-auto justify-end order-1 sm:order-2">
+          <button
+            type="button"
+            onClick={() => (onCancel ? onCancel() : router.back())}
+            className="btn flex-1 sm:flex-none"
+          >
+            Hủy bỏ
+          </button>
+          <button type="submit" disabled={loading} className="btn-primary flex-1 sm:flex-none">
+            {loading && <Loader2 className="size-4 animate-spin" />}
+            {loading
+              ? "Đang lưu..."
+              : isEditing
+                ? "Lưu thay đổi"
+                : "Thêm thành viên"}
+          </button>
+        </div>
       </motion.div>
     </form>
   );
